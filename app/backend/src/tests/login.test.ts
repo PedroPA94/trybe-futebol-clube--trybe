@@ -47,7 +47,7 @@ describe('A rota de login', () => {
     (UserModel.findOne as sinon.SinonStub).restore();
   })
 
-  it('Retorna um token JWT ao realizar login com informações corretas', async () => {
+  it('POST - Retorna um token JWT ao realizar login com informações corretas', async () => {
     chaiHttpResponse = await chai
        .request(app)
        .post('/login')

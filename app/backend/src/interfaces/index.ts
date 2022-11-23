@@ -1,8 +1,3 @@
-export interface IUser {
-  id?: number,
-  username: string,
-  password: string,
-  role?: string,
-}
+import IUser from './IUser';
 
 export default IUser;
