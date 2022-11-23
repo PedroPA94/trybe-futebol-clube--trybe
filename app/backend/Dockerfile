@@ -3,7 +3,7 @@ WORKDIR /app-backend
 
 EXPOSE 3001
 
-COPY ./package.json .
+COPY ./package* .
 
 RUN ["npm", "install"]
 
