@@ -3,7 +3,7 @@ WORKDIR /app-frontend
 
 EXPOSE 3000
 
-COPY ./package* .
+COPY ./package* ./
 
 RUN ["npm", "install"]
 
