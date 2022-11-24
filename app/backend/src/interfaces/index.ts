@@ -1,3 +1,5 @@
 import IUser from './IUser';
 
-export default IUser;
+const template = {};
+
+export { IUser, template };
