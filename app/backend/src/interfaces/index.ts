@@ -1,5 +1,4 @@
+import ILogin from './ILogin';
 import IUser from './IUser';
 
-const template = {};
-
-export { IUser, template };
+export { ILogin, IUser };

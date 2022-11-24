@@ -6,17 +6,13 @@ export default async function auth(req: Request, res: Response, next: NextFuncti
   const token: string | undefined = req.headers.authorization;
   const secret = process.env.JWT_SECRET as string;
 
-  if (!token) {
-    const e = new Error('Token not found');
-    throw e;
-  }
+  if (!token) throw new Error('Token not found');
 
   try {
     const decode = jwt.verify(token, secret);
     req.body.user = decode;
     next();
   } catch (err) {
-    const e = new Error('Token must be a valid token');
-    throw e;
+    throw new Error('Token must be a valid token');
   }
 }
