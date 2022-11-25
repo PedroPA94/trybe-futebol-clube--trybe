@@ -9,6 +9,14 @@ const errorMessagesAndStatus = [
     message: 'Incorrect email or password',
     status: 401,
   },
+  {
+    message: 'Token not found',
+    status: 401,
+  },
+  {
+    message: 'Token must be a valid token',
+    status: 401,
+  },
 ];
 
 const errorMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {
