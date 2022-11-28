@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import ITeam from '../interfaces/ITeam';
+import { ITeam } from '../interfaces';
 import { TeamService } from '../services';
 
 export default class TeamController {

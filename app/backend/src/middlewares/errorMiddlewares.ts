@@ -21,6 +21,10 @@ const errorMessagesAndStatus = [
     message: 'Team not found',
     status: 404,
   },
+  {
+    message: 'Invalid query',
+    status: 400,
+  },
 ];
 
 const errorMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {
