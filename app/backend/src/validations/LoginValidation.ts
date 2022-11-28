@@ -10,10 +10,10 @@ export default class LoginValidation {
 
   static async validateLoginData(loginData: ILogin): Promise<IUser> {
     const { email, password } = loginData;
-    const user = await UserModel.findOne({ where: { email } });
+    const user: IUser | null = await UserModel.findOne({ where: { email } });
     if (!user) throw new Error('Incorrect email or password');
 
-    const validPassword = bcrypt.compareSync(password, user.password);
+    const validPassword: boolean = bcrypt.compareSync(password, user.password);
     if (!validPassword) throw new Error('Incorrect email or password');
 
     return user;

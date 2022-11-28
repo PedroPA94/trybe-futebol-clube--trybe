@@ -10,7 +10,7 @@ import UserModel from '../database/models/UserModel';
 
 import * as jwt from 'jsonwebtoken';
 import { Response } from 'superagent';
-import { mockDatabaseUser, mockJwtDecode, mockLoginBadEmail, mockLoginOK, mockToken } from './mocks/login.mocks';
+import { mockDatabaseUser, mockJwtDecode, mockLoginBadEmail, mockLoginOK, mockToken } from './mocks/Login.mocks';
 
 chai.use(chaiHttp);
 

@@ -17,6 +17,10 @@ const errorMessagesAndStatus = [
     message: 'Token must be a valid token',
     status: 401,
   },
+  {
+    message: 'Team not found',
+    status: 404,
+  },
 ];
 
 const errorMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {

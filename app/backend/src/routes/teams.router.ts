@@ -1,8 +1,9 @@
 import * as express from 'express';
-// import { TeamController } from '../controllers'
+import { TeamController } from '../controllers';
 
 const router = express.Router();
 
-router.post('/');
+router.get('/', TeamController.findAll);
+router.get('/:id', TeamController.findById);
 
 export default router;
