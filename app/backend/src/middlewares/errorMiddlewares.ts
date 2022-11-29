@@ -33,6 +33,14 @@ const errorMessagesAndStatus = [
     message: 'There is no team with such id!',
     status: 404,
   },
+  {
+    message: 'Incorrect fields to update',
+    status: 400,
+  },
+  {
+    message: 'Match does not exist',
+    status: 404,
+  },
 ];
 
 const errorMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {

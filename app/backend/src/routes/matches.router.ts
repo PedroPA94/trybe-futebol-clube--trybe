@@ -4,7 +4,9 @@ import auth from '../middlewares/auth';
 
 const router = express.Router();
 
-router.get('/', MatchController.findMatches);
+router.patch('/:id/finish', auth, MatchController.setMatchAsFinished);
+router.patch('/:id', auth, MatchController.updateMatchGoals);
 router.post('/', auth, MatchController.createInProgressMatch);
+router.get('/', MatchController.findMatches);
 
 export default router;

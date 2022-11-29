@@ -25,4 +25,10 @@ export default class MatchService {
     const createdMatch = await MatchesModel.create({ ...newMatch, inProgress: true });
     return createdMatch;
   }
+
+  public static async updateMatch(updateData: Record<string, number | boolean>, id: number)
+    : Promise<void> {
+    await MatchValidation.validateMatchPatch(updateData, id);
+    await MatchesModel.update({ ...updateData }, { where: { id } });
+  }
 }
