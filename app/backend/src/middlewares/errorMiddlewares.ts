@@ -25,6 +25,14 @@ const errorMessagesAndStatus = [
     message: 'Invalid query',
     status: 400,
   },
+  {
+    message: 'It is not possible to create a match with two equal teams',
+    status: 422,
+  },
+  {
+    message: 'There is no team with such id!',
+    status: 404,
+  },
 ];
 
 const errorMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {

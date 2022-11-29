@@ -19,4 +19,10 @@ export default class MatchService {
 
     return matches;
   }
+
+  public static async createInProgressMatch(newMatch: IMatch): Promise<IMatch> {
+    await MatchValidation.validateNewMatchInputs(newMatch);
+    const createdMatch = await MatchesModel.create({ ...newMatch, inProgress: true });
+    return createdMatch;
+  }
 }
