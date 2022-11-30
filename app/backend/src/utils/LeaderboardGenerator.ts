@@ -13,13 +13,20 @@ type TeamGames = {
   totalLosses: number
 };
 
+type HomeOrAway = 'home' | 'away';
+
 export default class LeaderboardGenerator {
-  private static getTeamGoals(matches: IMatch[]): TeamGoals {
+  private static getTeamGoals(matches: IMatch[], homeOrAway: HomeOrAway): TeamGoals {
     let goalsFavor = 0;
     let goalsOwn = 0;
     matches.forEach((match) => {
-      goalsFavor += match.homeTeamGoals;
-      goalsOwn += match.awayTeamGoals;
+      if (homeOrAway === 'home') {
+        goalsFavor += match.homeTeamGoals;
+        goalsOwn += match.awayTeamGoals;
+      } else {
+        goalsFavor += match.awayTeamGoals;
+        goalsOwn += match.homeTeamGoals;
+      }
     });
     const goalsBalance = goalsFavor - goalsOwn;
     return {
@@ -29,19 +36,24 @@ export default class LeaderboardGenerator {
     };
   }
 
-  private static checkMatchResult(match: IMatch): string | undefined {
+  private static checkMatchResult(match: IMatch, homeOrAway: HomeOrAway): string {
     const { homeTeamGoals, awayTeamGoals } = match;
-    if (homeTeamGoals > awayTeamGoals) return 'victory';
     if (homeTeamGoals === awayTeamGoals) return 'draw';
+    if (homeOrAway === 'home') {
+      if (homeTeamGoals > awayTeamGoals) return 'victory';
+      return 'loss';
+    }
+    if (homeTeamGoals < awayTeamGoals) return 'victory';
+    return 'loss';
   }
 
-  private static getTeamGames(matches: IMatch[]): TeamGames {
+  private static getTeamGames(matches: IMatch[], homeOrAway: HomeOrAway): TeamGames {
     let totalVictories = 0;
     let totalDraws = 0;
     let totalLosses = 0;
 
     matches.forEach((match) => {
-      const matchResult = LeaderboardGenerator.checkMatchResult(match);
+      const matchResult = LeaderboardGenerator.checkMatchResult(match, homeOrAway);
       if (matchResult === 'victory') totalVictories += 1;
       else if (matchResult === 'draw') totalDraws += 1;
       else totalLosses += 1;
@@ -63,10 +75,11 @@ export default class LeaderboardGenerator {
     return totalPoints;
   }
 
-  private static getTeamStats(team: ITeamMatches, matches: 'homeMatches' | 'awayMatches')
+  private static getTeamStats(team: ITeamMatches, homeOrAway: HomeOrAway)
     : ILeaderboard {
-    const teamGoals = LeaderboardGenerator.getTeamGoals(team[matches] as IMatch[]);
-    const teamGames = LeaderboardGenerator.getTeamGames(team[matches] as IMatch[]);
+    const matches = homeOrAway === 'home' ? 'homeMatches' : 'awayMatches';
+    const teamGoals = LeaderboardGenerator.getTeamGoals(team[matches] as IMatch[], homeOrAway);
+    const teamGames = LeaderboardGenerator.getTeamGames(team[matches] as IMatch[], homeOrAway);
     const totalPoints = LeaderboardGenerator.getTeamPoints(teamGames);
     const efficiency = ((totalPoints / (teamGames.totalGames * 3)) * 100).toFixed(2);
 
@@ -91,13 +104,12 @@ export default class LeaderboardGenerator {
     return sortedLeaderboard;
   }
 
-  public static createLeaderboard(teams: ITeamMatches[], homeOrAway: 'home' | 'away')
+  public static createLeaderboard(teams: ITeamMatches[], homeOrAway: HomeOrAway)
     : ILeaderboard[] {
     const unsortedLeaderboard: ILeaderboard[] = [];
-    const matches = homeOrAway === 'home' ? 'homeMatches' : 'awayMatches';
 
     teams.forEach((team) => {
-      const teamStats = LeaderboardGenerator.getTeamStats(team, matches);
+      const teamStats = LeaderboardGenerator.getTeamStats(team, homeOrAway);
       unsortedLeaderboard.push(teamStats);
     });
 

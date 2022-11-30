@@ -26,4 +26,11 @@ export default class LeaderboardService {
       .createLeaderboard(homeTeams, 'home');
     return homeLeaderboard;
   }
+
+  public static async getAwayLeaderboard(): Promise<ILeaderboard[]> {
+    const awayTeams = await LeaderboardService.getTeamMatches('away');
+    const awayLeaderboard: ILeaderboard[] = LeaderboardGenerator
+      .createLeaderboard(awayTeams, 'away');
+    return awayLeaderboard;
+  }
 }
