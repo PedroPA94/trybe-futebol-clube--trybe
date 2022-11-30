@@ -33,4 +33,12 @@ export default class LeaderboardService {
       .createLeaderboard(awayTeams, 'away');
     return awayLeaderboard;
   }
+
+  public static async getFullLeaderboard(): Promise<ILeaderboard[]> {
+    const awayLeaderboard = await LeaderboardService.getAwayLeaderboard();
+    const homeLeaderboard = await LeaderboardService.getHomeLeaderboard();
+    const fullLeaderboard = LeaderboardGenerator
+      .joinHomeAndAwayLeaderboards(homeLeaderboard, awayLeaderboard);
+    return fullLeaderboard;
+  }
 }

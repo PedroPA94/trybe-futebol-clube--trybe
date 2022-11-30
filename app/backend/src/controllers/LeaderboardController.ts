@@ -11,4 +11,9 @@ export default class LeaderboardController {
     const awayLeaderboard = await LeaderboardService.getAwayLeaderboard();
     res.status(200).json(awayLeaderboard);
   };
+
+  public static getFullLeaderboard: RequestHandler = async (_req, res) => {
+    const fullLeaderboard = await LeaderboardService.getFullLeaderboard();
+    res.status(200).json(fullLeaderboard);
+  };
 }

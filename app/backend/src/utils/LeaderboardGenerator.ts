@@ -104,6 +104,24 @@ export default class LeaderboardGenerator {
     return sortedLeaderboard;
   }
 
+  private static createJoinedTeamStats(homeStats: ILeaderboard, awayStats: ILeaderboard) {
+    const joinedStats: Record<string, string | number> = {};
+
+    Object.keys(homeStats).forEach((key): void => {
+      if (key === 'name') {
+        joinedStats[key] = homeStats[key as keyof ILeaderboard];
+      } else {
+        joinedStats[key] = <number>homeStats[key as keyof ILeaderboard]
+          + <number>awayStats[key as keyof ILeaderboard];
+      }
+    });
+
+    const { totalPoints, totalGames } = joinedStats;
+    joinedStats.efficiency = ((<number>totalPoints / (<number>totalGames * 3)) * 100).toFixed(2);
+
+    return joinedStats as unknown as ILeaderboard;
+  }
+
   public static createLeaderboard(teams: ITeamMatches[], homeOrAway: HomeOrAway)
     : ILeaderboard[] {
     const unsortedLeaderboard: ILeaderboard[] = [];
@@ -114,5 +132,25 @@ export default class LeaderboardGenerator {
     });
 
     return LeaderboardGenerator.sortLeaderboard(unsortedLeaderboard);
+  }
+
+  public static joinHomeAndAwayLeaderboards(
+    homeLeaderboard: ILeaderboard[],
+    awayLeaderboard: ILeaderboard[],
+  )
+    : ILeaderboard[] {
+    const joinedLeaderboards: ILeaderboard[] = [];
+
+    homeLeaderboard.forEach((homeStats) => {
+      const awayStats = awayLeaderboard.find(({ name }) => name === homeStats.name);
+      if (awayStats) {
+        const joinedStats = LeaderboardGenerator.createJoinedTeamStats(homeStats, awayStats);
+        joinedLeaderboards.push(joinedStats);
+      } else {
+        joinedLeaderboards.push(homeStats);
+      }
+    });
+
+    return LeaderboardGenerator.sortLeaderboard(joinedLeaderboards);
   }
 }
