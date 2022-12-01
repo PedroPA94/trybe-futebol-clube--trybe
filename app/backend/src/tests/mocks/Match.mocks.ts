@@ -62,3 +62,19 @@ export const mockFindAllFinishedMatchesReturn = [
     }
   },
 ]
+
+export const mockNewMatch = {
+  "homeTeam": 16,
+  "awayTeam": 8,
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2,
+}
+
+export const mockCreatedMatch = {
+  "id": 42,
+  "homeTeam": 16,
+  "awayTeam": 8,
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2,
+  "inProgress": true
+}

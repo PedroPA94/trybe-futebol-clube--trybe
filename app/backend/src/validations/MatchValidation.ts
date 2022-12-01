@@ -35,8 +35,10 @@ export default class MatchValidation {
     : Promise<void> {
     await MatchValidation.validateMatchExist(id);
 
-    if (!('homeTeamGoals' in patchData) && !('awayTeamGoals' in patchData)
-      && !('inProgress' in patchData)) {
+    const validParams = ('homeTeamGoals' in patchData && 'awayTeamGoals' in patchData)
+    || 'inProgress' in patchData;
+
+    if (!validParams) {
       throw new Error('Incorrect fields to update');
     }
   }
