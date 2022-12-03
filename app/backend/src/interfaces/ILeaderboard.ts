@@ -1,4 +1,5 @@
 export default interface ILeaderboard {
+  [key: string]: string | number
   name: string
   totalPoints: number
   totalGames: number
