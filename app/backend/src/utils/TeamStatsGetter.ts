@@ -38,17 +38,6 @@ export default class TeamStatsGetter {
     const awayTeamGoals = matches.reduce((acc, cur) => acc + cur.awayTeamGoals, 0);
     const goalsFavor = homeOrAway === 'home' ? homeTeamGoals : awayTeamGoals;
     const goalsOwn = homeOrAway === 'home' ? awayTeamGoals : homeTeamGoals;
-    // let goalsFavor = 0;
-    // let goalsOwn = 0;
-    // matches.forEach((match) => {
-    //   if (homeOrAway === 'home') {
-    //     goalsFavor += match.homeTeamGoals;
-    //     goalsOwn += match.awayTeamGoals;
-    //   } else {
-    //     goalsFavor += match.awayTeamGoals;
-    //     goalsOwn += match.homeTeamGoals;
-    //   }
-    // });
     const goalsBalance = goalsFavor - goalsOwn;
     return {
       goalsBalance,
